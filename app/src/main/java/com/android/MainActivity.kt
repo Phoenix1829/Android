@@ -1,5 +1,6 @@
 package com.android
 
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -9,12 +10,10 @@ import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -24,14 +23,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-
 import androidx.compose.material3.Divider
 import androidx.compose.ui.unit.dp
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
@@ -50,12 +47,16 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.sp
 
+val Modernist_Bold = FontFamily(Font(R.font.sk_modernist_bold))
+val Montserrat_Bold = FontFamily(Font(R.font.montserrat_bold))
+
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -73,21 +74,35 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+@Composable
+fun ContentVideo(uri: Uri) {
+
+    val videoUri = uri
+
+    Modifier.verticalScroll(ScrollState(1))
+
+    Spacer(modifier = Modifier.height(16.dp))
+
+    VideoPlayer(videoUri = videoUri)
+}
+
+
+
 
 @Composable
 fun Header() {
-    Box() {
+    Box {
         Image(
             painter = painterResource(id = R.drawable.preview),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(0.3f)
+                .height(250.dp)
         )
 
 
-        Row(Modifier.padding(start = 20.dp, top = 240.dp)) {
+        Row(Modifier.padding(start = 20.dp, top = 235.dp)) {
             Image(
                 painter = painterResource(id = R.drawable.logo),
                 contentDescription = null,
@@ -110,12 +125,9 @@ fun Header() {
                     text = stringResource(id = R.string.app_name),
                     color = colorResource(id = R.color.white),
                     fontSize = 24.sp,
-                    fontFamily = FontFamily.SansSerif
-
+                    style = androidx.compose.ui.text.TextStyle(fontFamily = Modernist_Bold)
                 )
-                Row(
-
-                ) {
+                Row{
                     RatingBar(
                         rating = 5.0f,
                         modifier = Modifier.padding(top = 5.dp)
@@ -124,26 +136,61 @@ fun Header() {
                         text = stringResource(id = R.string.CountDownload),
                         color = colorResource(id = R.color.colorCountDownload),
                         fontSize = 16.sp,
-                        fontFamily = FontFamily.SansSerif,
-                        modifier = Modifier.padding(start = 15.dp, top = 3.dp)
+                        modifier = Modifier.padding(start = 15.dp, top = 3.dp),
+                        style = androidx.compose.ui.text.TextStyle(fontFamily = Modernist_Bold)
+
 
                     )
                 }
+
             }
         }
     }
+    Row(
+        Modifier.padding(start = 20.dp, end = 20.dp, top = 20.dp)
+    ){
+        Tag(stringResource(id = R.string.Tag1))
+        Tag(stringResource(id = R.string.Tag2))
+        Tag(stringResource(id = R.string.Tag3))
+    }
 }
+
+@Composable
+fun Tag(
+    text: String
+) {
+    TextButton(
+        onClick = {},
+        Modifier
+            .padding(end = 10.dp),
+        colors = ButtonDefaults.buttonColors(
+            colorResource(id = R.color.colorTag)
+        ),
+
+    ) {
+        Text(
+            text = text,
+            color = colorResource(id = R.color.colorTextTag),
+            fontSize = 12.sp,
+            style = androidx.compose.ui.text.TextStyle(fontFamily = Montserrat_Bold)
+
+        )
+    }
+
+}
+
 @Composable
 fun ButtonInstall(){
-    Button(
+    TextButton(
         onClick = {},
-
-        colors = ButtonDefaults.buttonColors(
-            colorResource(id = R.color.colorButtonInstall)
-        ),
-        modifier = Modifier
+        Modifier
+            .padding(20.dp)
             .fillMaxWidth()
-            .padding(start = 20.dp, top = 25.dp, end = 20.dp)
+            .height(64.dp),
+            shape = RoundedCornerShape(12.dp),
+        colors = ButtonDefaults.buttonColors(
+            colorResource(id = R.color.colorButtonInstall),
+        )
 
 
     ) {
@@ -151,20 +198,20 @@ fun ButtonInstall(){
             text = stringResource(id = R.string.ButtonInstall),
             color = colorResource(id = R.color.MainColor),
             fontSize = 25.sp,
-            fontStyle = FontStyle.Normal,
+            style = androidx.compose.ui.text.TextStyle(fontFamily = Modernist_Bold)
         )
     }
 }
 @Composable
 fun Description() {
     Box(
-        modifier = Modifier.padding(top = 100.dp, start = 20.dp, end = 20.dp)
+        modifier = Modifier.padding(top = 25.dp, start = 20.dp, end = 20.dp)
     ) {
         Text(
             text = stringResource(id = R.string.description),
             color = colorResource(id = R.color.white),
             fontSize = 16.sp,
-            fontFamily = FontFamily.SansSerif,
+            style = androidx.compose.ui.text.TextStyle(fontFamily = Modernist_Bold),
             modifier = Modifier.alpha(0.7f)
         )
     }
@@ -173,6 +220,9 @@ fun Description() {
             .padding(start = 20.dp, top = 25.dp, end = 20.dp)
             .horizontalScroll(ScrollState(1))
     ) {
+
+
+        ContentVideo(Uri.parse("android.resource://com.android/raw/trailer"))
         ContentImage(painterResource(id = R.drawable.image1))
         ContentImage(painterResource(id = R.drawable.image2))
     }
@@ -198,8 +248,8 @@ fun ReviewAndRatings() {
     Text(
         text = stringResource(id = R.string.NameChapterRatings),
         color = colorResource(id = R.color.colorRating),
-        fontSize = 20.sp,
-        fontStyle = FontStyle.Normal,
+        fontSize = 22.sp,
+        style = androidx.compose.ui.text.TextStyle(fontFamily = Modernist_Bold),
         modifier = Modifier
             .padding(start = 20.dp, top = 30.dp)
     )
@@ -231,14 +281,12 @@ fun Rating(
     Column(
         Modifier.padding(start = 20.dp, top = 20.dp)
     ) {
-        Row(
-
-        ) {
+        Row{
             Text(
                 text = rating,
                 color = colorResource(id = R.color.white),
                 fontSize = 50.sp,
-                fontStyle = FontStyle.Normal,
+                style = androidx.compose.ui.text.TextStyle(fontFamily = Modernist_Bold)
             )
             Column(Modifier.padding(start = 30.dp, top = 16.dp)) {
                 RatingBar(rating = 4.5f)
@@ -246,7 +294,7 @@ fun Rating(
                     text = countReviews,
                     color = colorResource(id = R.color.colorCountReview),
                     fontSize = 16.sp,
-                    fontStyle = FontStyle.Normal,
+                    style = androidx.compose.ui.text.TextStyle(fontFamily = Modernist_Bold)
                 )
 
             }
@@ -282,14 +330,14 @@ fun Review(
                     text = name,
                     color = colorResource(id = R.color.white),
                     fontSize = 18.sp,
-                    fontStyle = FontStyle.Normal,
+                    style = androidx.compose.ui.text.TextStyle(fontFamily = Modernist_Bold)
 
                 )
                 Text(
                     text = date,
                     color = colorResource(id = R.color.white),
                     fontSize = 18.sp,
-                    fontStyle = FontStyle.Normal,
+                    style = androidx.compose.ui.text.TextStyle(fontFamily = Modernist_Bold),
                     modifier = Modifier.alpha(0.4f)
                 )
             }
@@ -298,7 +346,7 @@ fun Review(
             text = review,
             color = colorResource(id = R.color.white),
             fontSize = 18.sp,
-            fontStyle = FontStyle.Normal,
+            style = androidx.compose.ui.text.TextStyle(fontFamily = Modernist_Bold),
             modifier = Modifier.padding(start = 20.dp, top = 15.dp, bottom = 30.dp, end = 20.dp)
         )
         DividerReview()

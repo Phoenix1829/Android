@@ -10,4 +10,7 @@
     <string name="CountReviews">70M Reviews</string>
     <string name="Rating">4.9</string>
     <string name="CountDownload">70M</string>
+    <string name="Tag1">MOBA</string>
+    <string name="Tag2">MULTIPLAYER</string>
+    <string name="Tag3">STRATEGY</string>
 </resources>

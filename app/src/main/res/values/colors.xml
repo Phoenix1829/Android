@@ -16,4 +16,6 @@
     <color name="colorCountReview">#A8ADB7</color>
     <color name="colorCountDownload">#45454D</color>
     <color name="colorDivider">#1A1F29</color>
+    <color name="colorTag">#14304b</color>
+    <color name="colorTextTag">#3b92d5</color>
 </resources>
